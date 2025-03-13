@@ -19,7 +19,7 @@ db.connect(process.env.MONGOOSE_URL)
 .catch(error=> console.log("mongoose databased failed",error));
 
 
-app.use("/home",(req,res)=>{
+app.use("/",(req,res)=>{
     res.send("<h1>Welcome To Home Page</h1>")
 });
 
