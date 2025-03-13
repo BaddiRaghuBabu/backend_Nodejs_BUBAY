@@ -32,9 +32,8 @@ app.use('/product',productRoute);
 app.use('/uploads',express.static("upload"));
 
 
-
 // server 
-const Port=3300;
-app.listen(Port,()=>{
-    console.log(`server started and connecting at ${Port} `);
+const PORT= process.env.PORT ||3300;
+app.listen(PORT,()=>{
+    console.log(`server started and connecting at ${PORT} `);
 });
