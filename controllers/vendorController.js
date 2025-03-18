@@ -47,13 +47,15 @@ const vendorLogin= async(req,res)=>{
         // mddilewares
 
         dotEN.config();
-        const JWT_SECRET=process.env.SECRETKEY
+        const secreteKey=process.env.SECRETKEY
         
 
-        const token = jwt.sign({ vendorId: vendorData._id }, JWT_SECRET, { expiresIn: "1h" });
+        const token = jwt.sign({ vendorId: vendorData._id }, secreteKey, { expiresIn: "2h" });
+
+       const vendorId=vendorData._id;  //<---for frointend code to send vendor login for vendorId
 
 
-       res.status(201).json({message:"successfully login  ",token});
+       res.status(201).json({message:"successfully login  ",token,vendorId});
      
 
 
@@ -75,6 +77,7 @@ const getAllVendors=async(req,res)=>{
     }
 };
 // fatch-data by id
+
 const getVendorById=async(req,res)=>{
   const vendorId=req.params.id;
   try {
@@ -82,7 +85,9 @@ const getVendorById=async(req,res)=>{
      if (!vendor){
         return res.status(404).json({error:"Not found data"});
      }
-     res.status(200).json({vendor});
+     const vendorFirmId = vendor.Firms[0]._id;
+
+     res.status(200).json({vendor,vendorFirmId,vendor});
   } catch (error) {
     console.log(error);
     res.status(500).json({error:"internal server error"});

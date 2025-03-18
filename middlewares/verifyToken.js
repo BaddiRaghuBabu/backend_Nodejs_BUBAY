@@ -6,10 +6,10 @@ dotEN.config();
 const secreteKey=process.env.SECRETKEY;
 
 const verifyToken =async(req,res,next)=>{
-   const token=req.header.token;
+   const token=req.headers.token
 
    if(!token){
-       return res.status(201).json({message:"added registered"});
+       return res.status(401).json({error:'Token is required'});
    }
 
    try {
@@ -28,10 +28,13 @@ const verifyToken =async(req,res,next)=>{
 
    } catch (error) {
        console.log(error)
+       if (error.name === "TokenExpiredError") {
+        return res.status(401).json({ error: "Token expired, please login again" });
+      }
        return res.status(500).json({error:"Invalid Token "})
    };
 
 
 }
 
-module.exports=verifyToken;
+module.exports=verifyToken

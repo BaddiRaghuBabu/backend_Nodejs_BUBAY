@@ -1,5 +1,4 @@
 const mongoose=require("mongoose");
-const Firm = require("./Firm");
 const productSchema=new mongoose.Schema({
     productName:{
         type:String,
@@ -7,7 +6,7 @@ const productSchema=new mongoose.Schema({
 
     },
     price:{
-        type:String,
+        type:Number,
         required:true
     },
     category:{
@@ -25,12 +24,11 @@ const productSchema=new mongoose.Schema({
     des:{
         type:String
     },
-    firm:[
-        {
-            type:mongoose.Schema.Types.ObjectId,
-            ref:"Firm"
-        }
-    ]
+    firm: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Firm",
+        
+    }
 
 });
 

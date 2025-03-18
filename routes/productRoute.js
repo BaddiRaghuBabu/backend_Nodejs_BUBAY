@@ -8,10 +8,18 @@ router.post('/add-product/:firmId',productController.addProduct);
 router.get('/:firmId',productController.getProductById)
 router.delete('/:productId',productController.deleteProductById)
 
-router.get('/uploads/:imageName',(req,res)=>{
-    const imageName=req.params.imageName;
-    res.headersSent('Content-Type','image/jpeg');
-    res.sendFile(path.join(-__dirname,"..","uploads",imageName));
+// Serve Uploaded Images
+router.get("/uploads/:imageName", (req, res) => {
+    const imageName = req.params.imageName;
+    const imagePath = path.join(__dirname, "..", "uploads", imageName);
+
+    res.setHeader("Content-Type", "image/jpeg");
+    res.sendFile(imagePath, (err) => {
+        if (err) {
+            console.error("Error sending image:", err);
+            res.status(404).send("Image not found");
+        }
+    });
 });
 
 
